@@ -10,17 +10,17 @@ schema:
 switches:
   - name: ascii_mode
     reset: 0
-    states: [ 中文, 西文 ]
+    states: [中文, 西文]
   - name: full_shape
-    states: [ 半角, 全角 ]
+    states: [半角, 全角]
   - name: simplification
     reset: 1
-    states: [ 漢字, 汉字 ]
+    states: [漢字, 汉字]
   - name: ascii_punct
-    states: [ 。，, ．， ]
+    states: [。，, ．，]
   - name: emoji_suggestion
     reset: 1
-    states: [ "🈚️️\uFE0E", "🈶️️\uFE0F" ]
+    states: ["🈚️️\uFE0E", "🈶️️\uFE0F"]
 
 engine:
   processors:
@@ -42,12 +42,12 @@ engine:
   translators:
     - punct_translator
     - script_translator
-    - table_translator@custom_phrase   # 自定义短语
+    - table_translator@custom_phrase # 自定义短语
     - table_translator@top_single_char # 固顶单字
-    - table_translator@top_words       # 固顶词组
-    - table_translator@erbi_filter     # 二笔辅助码
-    - table_translator@erbi_filter_lookup # 二笔辅助码反查
-    - table_translator@english         # 英文输入
+    - table_translator@top_words # 固顶词组
+    # - table_translator@erbi_filter # 二笔辅助码
+    # - table_translator@erbi_filter_lookup # 二笔辅助码反查
+    - table_translator@english # 英文输入
     - lua_translator@date_translator
   filters:
     - simplifier
@@ -127,9 +127,6 @@ translator:
   #   - xform/([jqxy])v/$1u/
   #   - xform/([nl])v/$1ü/
 
-punctuator:
-  import_preset: default
-
 key_binder:
   import_preset: default
 
@@ -145,9 +142,9 @@ punctuator:
     "~": "~"
     "@": "@"
     "=": "="
-    "/": ["/", "÷",]
+    "/": ["/", "÷"]
     '\': "、"
-    "'": {pair: ["「", "」"]}
+    "'": { pair: ["「", "」"] }
     "[": ["【", "["]
     "]": ["】", "]"]
     "$": ["¥", "$", "€", "£", "¢", "¤"]
@@ -177,24 +174,6 @@ top_words:
   enable_completion: false
   enable_sentence: false
   initial_quality: 1
-
-erbi_filter:
-  dictionary: ""
-  user_dict: ./dicts/top/erbi_filter
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 1
-
-erbi_filter_lookup:
-  dictionary: ""
-  user_dict: ./dicts/top/erbi_filter_lookup
-  db_class: stabledb
-  enable_completion: true
-  comment_format:
-      - "xform/~//"
-  enable_sentence: false
-  initial_quality: 0
 
 emoji_suggestion:
   opencc_config: emoji.json
